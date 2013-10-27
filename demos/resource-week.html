@@ -19,36 +19,21 @@
 							header: {
 								left: 'prev,next today',
 								center: 'title',
-								right: 'resourceDay,month,agendaWeek,agendaDay'
+								right: 'resourceWeek,agendaWeek,resourceDay,month,agendaDay'
 							},
 							editable: true,
+							weekends: false,
+							minTime: 8,
+							maxTime: '21:30',
+							defaultView: 'resourceWeek',
 							resources: [
 								{
 									id: 1,
-									name: 'Joe Bloggs',
-									color: 'red',
-									textColor: 'black'
+									name: 'Room-A'
 								},
 								{
 									id: 2,
-									name: 'Alan Black',
-									color: 'blue'
-								},
-								{
-									id: 4,
-									name: 'Paul Green',
-									color: 'green'
-								},
-								{
-									id: 5,
-									name: 'Jane Yellow',
-									color: 'yellow',
-									textColor: 'black'
-								},
-								{
-									id: 6,
-									name: 'Bob Orange',
-									color: 'orange'
+									name: 'Room-B'
 								}
 							],
 							events: [
@@ -78,30 +63,37 @@
 								},
 								{
 									title: 'Meeting',
-									start: new Date(y, m, d, 10, 30),
+									start: new Date(y, m, d+1, 10, 30),
 									allDay: false,
-									resourceId: 3
+									resourceId: 1
 								},
 								{
 									title: 'Lunch',
-									start: new Date(y, m, d, 12, 0),
-									end: new Date(y, m, d, 14, 0),
+									start: new Date(y, m, d+1, 12, 0),
+									end: new Date(y, m, d+1, 14, 0),
+									allDay: false,
+									resourceId: 2
+								},
+								{
+									title: 'Another Lunch',
+									start: new Date(y, m, d+3, 12, 0),
+									end: new Date(y, m, d+3, 14, 0),
 									allDay: false,
 									resourceId: 2
 								},
 								{
 									title: 'Birthday Party',
-									start: new Date(y, m, d+1, 19, 0),
-									end: new Date(y, m, d+1, 22, 30),
+									start: new Date(y, m, d+2, 19, 0),
+									end: new Date(y, m, d+2, 20, 30),
 									allDay: false,
-									resourceId: 3
+									resourceId: 1
 								},
 								{
 									title: 'Click for Google',
 									start: new Date(y, m, 28),
 									end: new Date(y, m, 29),
 									url: 'http://google.com/',
-									resourceId: 3
+									resourceId: 1
 								}
 							]
 						});
@@ -112,8 +104,7 @@
 						var newResource = 	
 								{
 									id: 3,
-									name: 'Robert White',
-									color: 'pink'
+									name: 'Room-C'
 								};
 						resources = $('#calendar').fullCalendar( 'addEventResource', newResource );
 					}
@@ -132,7 +123,7 @@
 						}
 
 					#calendar {
-						width: 900px;
+						width: 1200px;
 						margin: 0 auto;
 						}
 

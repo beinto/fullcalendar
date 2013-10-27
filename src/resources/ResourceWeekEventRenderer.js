@@ -109,7 +109,9 @@ function ResourceWeekEventRenderer() {
 			i, col,
 			j, level,
 			k, seg,
-			segs=[];
+			segs=[],
+      resources;
+    resources = calendar.getResources();
 		for (i=0; i<colCnt; i++) {
 			col = stackSegs(sliceSegs(events, visEventEnds, d, addMinutes(cloneDate(d), maxMinute-minMinute)));
 			countForwardSegs(col);
@@ -117,8 +119,12 @@ function ResourceWeekEventRenderer() {
 				level = col[j];
 				for (k=0; k<level.length; k++) {
 					seg = level[k];
-					seg.col = i;
-					seg.level = j;
+					seg.col = (i * resources.length) + seg.event.resource.id - 1;
+          // TODO: I disabled the ability of two events to render side by side
+          // This can be done but more time needs to be spent in this function to correctly calculate level
+          // Note: level is the position of a event when two events happen at the same time
+					//seg.level = j;
+          seg.level = 0;
 					segs.push(seg);
 				}
 			}

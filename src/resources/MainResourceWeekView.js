@@ -188,6 +188,7 @@ function MainResourceWeekView(element, calendar, viewName) {
     var s;
     var i;
     var j;
+    var k;
     var d;
     var maxd;
     var minutes;
@@ -195,7 +196,7 @@ function MainResourceWeekView(element, calendar, viewName) {
     var resources = calendar.getResources();
     
     s =
-      "<h1>Numero dias: "+colCnt+"<br/>Numero recursos: "+resources.length+"</h1><table style='width:100%' class='fc-agenda-days fc-border-separate' cellspacing='0'>" +
+      "<table style='width:100%' class='fc-agenda-days fc-border-separate' cellspacing='0'>" +
       "<thead>" +
       "<tr>";
 
@@ -205,12 +206,13 @@ function MainResourceWeekView(element, calendar, viewName) {
     else {
       s += "<th class='fc-agenda-axis " + headerClass + "'>&nbsp;</th>";
     }
-
+    k=0;
     for (i=0; i<colCnt; i++) {
-      //for (j=0; j<resources.length; j++) {
+      for (j=0; j<resources.length; j++) {
       s +=
-        "<th class='fc- fc-col" + i + ' ' + headerClass + "'/>"; // fc- needed for setDayID
-    }
+        "<th class='fc- fc-col" + k + ' ' + headerClass + "'/>"; // fc- needed for setDayID
+      k++
+    }}
     s +=
       "<th class='fc-agenda-gutter " + headerClass + "'>&nbsp;</th>" +
       "</tr>" +
@@ -218,17 +220,19 @@ function MainResourceWeekView(element, calendar, viewName) {
       "<tbody>" +
       "<tr>" +
       "<th class='fc-agenda-axis " + headerClass + "'>&nbsp;</th>";
+    k=0;
     for (i=0; i<colCnt; i++) {
-      //for (j=0; j<resources.length; j++) {
+      for (j=0; j<resources.length; j++) {
       s +=
-        "<td class='fc- fc-col" + i + ' ' + contentClass + "'>" + // fc- needed for setDayID
+        "<td class='fc- fc-col" + k + ' ' + contentClass + "'>" + // fc- needed for setDayID
         "<div>" +
         "<div class='fc-day-content'>" +
         "<div style='position:relative'>&nbsp;</div>" +
         "</div>" +
         "</div>" +
         "</td>";
-    }
+      k++;
+    }}
     s +=
       "<td class='fc-agenda-gutter " + contentClass + "'>&nbsp;</td>" +
       "</tr>" +
@@ -337,10 +341,13 @@ function MainResourceWeekView(element, calendar, viewName) {
   
   function updateCells() {
     var i;
+    var j;
+    var k;
     var headCell;
     var bodyCell;
     var date;
     var today = clearTime(new Date());
+    var resources = calendar.getResources();
 
     if (showWeekNumbers) {
       var weekText = formatDate(colDate(0), weekNumberFormat);
@@ -353,18 +360,21 @@ function MainResourceWeekView(element, calendar, viewName) {
       dayHead.find('.fc-week-number').text(weekText);
     }
 
+    k=0;
     for (i=0; i<colCnt; i++) {
+      for (j=0; j<resources.length; j++) {
       date = colDate(i);
-      headCell = dayHeadCells.eq(i);
-      headCell.html(formatDate(date, colFormat));
-      bodyCell = dayBodyCells.eq(i);
+      headCell = dayHeadCells.eq(k);
+      headCell.html(formatDate(date, colFormat)+' '+resources[j]['name']);
+      bodyCell = dayBodyCells.eq(k);
       if (+date == +today) {
         bodyCell.addClass(tm + '-state-highlight fc-today');
       }else{
         bodyCell.removeClass(tm + '-state-highlight fc-today');
       }
       setDayID(headCell.add(bodyCell), date);
-    }
+      k++;
+    }}
   }
   
   
@@ -433,8 +443,8 @@ function MainResourceWeekView(element, calendar, viewName) {
         .addClass('fc-last');
     }
     
-    colWidth = Math.floor((slotTableWidth - axisWidth) / colCnt);
-    setOuterWidth(dayHeadCells.slice(0, -1), colWidth);
+    //colWidth = Math.floor((slotTableWidth - axisWidth) / colCnt);
+    //setOuterWidth(dayHeadCells.slice(0, -1), colWidth);
   }
   
 
