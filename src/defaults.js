@@ -58,7 +58,8 @@ var defaults = {
 		month: 'month',
 		week: 'week',
 		day: 'day',
-		resourceDay: 'resource'
+		resourceDay: 'resource',
+		resourceWeek: 'resource week'
 	},
 	
 	// jquery-ui theming
